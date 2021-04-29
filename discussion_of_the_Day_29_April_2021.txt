@@ -1,0 +1,219 @@
+Some of the important sites to learn MySQL
+
+
+https://www.mysqltutorial.org/
+https://www.tutorialspoint.com/mysql/index.htm
+https://www.javatpoint.com/mysql-tutorial
+https://dev.mysql.com/doc/refman/8.0/en/tutorial.html
+https://www.w3schools.com/sql/
+
+
+Some of the important sites to learn Oracle PL/SQL
+
+https://www.oracletutorial.com/plsql-tutorial/plsql-anonymous-block/
+https://www.techonthenet.com/oracle/procedures.php#:~:text=The%20syntax%20to%20create%20a,EXCEPTION%20exception_section%5D%20END%20%5Bprocedure_name%5D%3B
+https://www.techonthenet.com/oracle/functions.php
+
+Oracle 11g installation
+https://www.youtube.com/watch?v=tsGScvTfriM
+https://www.oracle.com/in/database/technologies/xe-prior-releases.html
+-------------------------------------------------------------------------------------------------------------
+
+GROUP BY :- Group rows based on distinct values that exist for a specified columns.
+
+
+Without group aggregate functions can you use aggregate function?
+Yes
+
+Display the count of employees 
+
+SELECT count(empcode) NUMBER_OF_EMPLOYEES 
+FROM employee_master;
+
+Display the designationwise count of employees.
+[Hint GROUP BY clause]
+
+SELECT desig,count(empcode) 
+FROM employee_master
+GROUP BY desig;
+
+The usage of GROUP BY HAVING 
+Having is used along with group by to put some filter or condition.
+We dont use where with group by to filter records after grouping but
+where can be there in the SQL statement where we are using group by to filter records before grouping.
+
+WHERE====> Basically used to filter without grouping
+HAVING====> is used to filter after grouping
+
+Display the designationwise count of employees where the count the count is more than 1.
+
+SELECT desig,count(empcode) 
+FROM employee_master
+GROUP BY desig
+HAVING count(empcode)>1;
+ 
+Display the designationwise count of employees from Mkt department
+where the count is more than 1.
+
+SELECT desig,count(empcode)
+FROM employee_master
+WHERE dept='Mkt'
+GROUP BY desig
+HAVING count(empcode)>1;
+------------------------------------------------------------------------------------------------
+
+Display the count of employees designationwise in a descending order of the count.
+
+SELECT desig,count(desig) counting
+FROM  employee_master
+GROUP BY desig
+ORDER BY counting DESC;
+
+Display the customerid , customer firstname , address and count of items purchased.
+
+SELECT cm.cust_code,firstname,address,count(item_code)
+FROM customer_master cm JOIN item_transaction it
+ON cm.cust_code=it.cust_code
+GROUP BY cm.cust_code,firstname,address;
+
+
+Display the count of employees department wise and within the department designationwise.
+
+
+Display the employee's firstname who is having the maximum basic.
+
+Subqueries ( queries within another query)
+
+The solution which we can achieve through sub queries can be achieved through join vice versa.
+The joins are always good as comparsion to subqueries.
+
+So whenever you people think of subqueries , try to break the problem into smaller parts example
+
+  
+1)  SELECT firstname FROM employee_master;
+2)  SELECT max(basic) FROM employee_master;
+
+While working with subqueries like above first the inner query executes and the output of inner
+query is given to the outer query as an output and with the output outer query executes
+
+ SELECT firstname FROM employee_master
+ WHERE basic=(SELECT max(basic) FROM employee_master);
+
+-------------------------------------------------------
+
+Display the employees firstname and designation who are having the same designation as Peter.
+
+SELECT firstname,desig
+ FROM employee_master
+ WHERE desig=(SELECT desig from employee_master WHERE firstname='Nalini');
+ 
+
+
+
+-------------------------------------------------------------------------------
+What is PL/SQL===> procedural extension of SQL in Oracle.
+
+https://www.oracle.com/in/database/technologies/xe-prior-releases.html
+For oracle installation
+
+-------------------------------------------------
+Open the sql command prompt
+
+SQL> Connect sys / password as sysdba;
+
+ PL/SQL
+  1) Anonymous Block
+  2) Procedures and Functions
+  3) TRiggers
+  4) Cursors
+  5) Exception Handling
+  6) Collection
+---------------------------------------------------------------------------------------------------   
+
+
+Anonymous Block is a block without a name.So the below code is not accepted.
+The anonymous should have atleast one executable line.
+           BEGIN
+              NULL;
+           END;
+--------------------------------------------------------------------           
+            BEGIN
+              dbms_output.put_line('Hello Friends');
+           END;
+---------------------------------------
+If you execute the above anonymous block , it will execute but without any output. To see the output
+please write 
+
+SET SERVEROUTPUT ON
+and then again execute by putting / ( / is used to repeat the last command executed and also to mark
+an end of a block).
+
+-----------------------------------------------------------------------------------------------------
+One more example
+
+     BEGIN  
+         dbms_output.put_line('The second code');
+   
+     END;
+  
+----------------------------------------------------------------------------------------
+     
+DECLARE
+  l_message VARCHAR2(40):='Hello World!';
+BEGIN
+  DBMS_OUTPUT.PUT_LINE(l_message);
+END;
+
+----------------------------------------------------------------------------------------------
+DECLARE
+  num1 NUMBER(3):=10;
+  num2 NUMBER(3):=20;
+  res NUMBER(3):=0;
+
+BEGIN
+  res:=num1+num2;
+  DBMS_OUTPUT.PUT_LINE('The result is'||res);
+END;
+---------------------------------------------------------------------------------------------------
+
+We can even save the PL/SQL block in a file and keep the extension as sql.
+In our case it is demo1.sql. To execute goto the SQL prompt and write 
+
+ @ <path of the sql file>
+ example
+ @ H:\cts\demo1.sql
+
+The content of demo1 is as follows:
+
+begin
+  dbms_output.put_line('Hello');
+end;
+/
+
+----------------
+create or replace procedure sum
+as
+number1 number:=1;
+number2 number:=2;
+number3 number:=3;
+result number;
+begin
+result:=number1+number2+number3;
+dbms_output.put_line(result);
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
